@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 function App() {
-  return 'init'
+    return 'init'
 }
 
 export default App;
