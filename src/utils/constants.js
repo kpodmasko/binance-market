@@ -1,6 +1,10 @@
 const testIds = {
     app: 'app',
-    header: 'header'
+    header: 'header',
+    select: {
+        root: 'select',
+        option: 'option'
+    }
 }
 
 export {
