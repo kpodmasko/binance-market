@@ -1,9 +1,10 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import App from './App';
+import App from '.';
+import {testIds} from "../../utils/constants";
 
-test('renders learn react link', () => {
-    const {getByText} = render(<App/>);
-    const linkElement = getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument();
+test('renders app', () => {
+    const {getByTestId} = render(<App/>);
+    const appElement = getByTestId(testIds.app);
+    expect(appElement).toBeInTheDocument();
 });
