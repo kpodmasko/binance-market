@@ -9,7 +9,8 @@ const testIds = {
         root: 'icon',
         instance: 'icon__instance'
     },
-    toggler: 'toggler'
+    toggler: 'toggler',
+    search: 'search'
 }
 
 export {
