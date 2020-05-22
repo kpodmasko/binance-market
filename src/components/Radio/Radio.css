@@ -1,0 +1,14 @@
+.radio {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.radio__instance {
+    margin-right: 5px;
+}

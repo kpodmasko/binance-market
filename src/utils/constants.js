@@ -10,7 +10,8 @@ const testIds = {
         instance: 'icon__instance'
     },
     toggler: 'toggler',
-    search: 'search'
+    search: 'search',
+    radio: 'radio'
 }
 
 export {

@@ -3,15 +3,17 @@
     margin: 0 auto;
 }
 
-.app__header {
+.app__header, .app__currency, .app__search-and-rate-wrapper {
     margin: 0 0 10px;
 }
 
-.app__search-and-toggler-wrapper {
+.app__search-and-rate-wrapper {
     display: flex;
     align-items: center;
     padding: 0 5px;
 }
+
+/* LAYOUT */
 
 .app__layout--60 {
     width: 60%;

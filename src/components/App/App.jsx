@@ -6,9 +6,18 @@ import Toggler from "../Toggler";
 import Select from "../Select";
 import Icon from "../Icon";
 import Search from "../Search";
+import Radio from "../Radio";
 import {testIds} from "../../utils/constants";
 
 import './App.css';
+
+const radioData = [{
+    label: 'Change',
+    value: 'change'
+}, {
+    label: 'Volume',
+    value: 'volume'
+}]
 
 function App() {
     const renderALTS = useCallback(
@@ -19,14 +28,14 @@ function App() {
 
     const renderJSD = useCallback(
         ({setIsOpen, isOpen}) => <div onClick={/*TODO: think*/() => setIsOpen(!isOpen)}>
-                JSD
+            JSD
             <Icon icon={faDollarSign}/>
         </div>, []
     );
 
     return <div data-testid={testIds.app} className='app'>
         <Header title='Market' className='app__header'/>
-        <Toggler>
+        <Toggler className='app__currency'>
             <Icon icon={faStar}/>
             <span>Margin</span>
             <span>BNB</span>
@@ -38,14 +47,15 @@ function App() {
                 jsdopen
             </Select>
         </Toggler>
-        <div className='app__search-and-toggler-wrapper'>
+        <div className='app__search-and-rate-wrapper'>
             <div className='app__layout--60'>
                 <Search/>
             </div>
-            <Toggler className='app__layout--40'>
-                <label><input type='radio'/>Change</label>
-                <label><input type='radio'/>Volume</label>
-            </Toggler>
+            <Radio
+                data={radioData}
+                name='rate'
+                className='app__rate app__layout--40'
+            />
         </div>
     </div>
 }
