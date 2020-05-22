@@ -3,6 +3,11 @@
     justify-content: space-around;
 }
 
+.toggler__item {
+    padding: 5px;
+    cursor: pointer;
+}
+
 .toggler__item--selected {
     background: lightgray;
 }
