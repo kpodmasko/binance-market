@@ -1,3 +1,11 @@
 .select {
     cursor: pointer;
 }
+
+.select__root-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 55px;
+    user-select: none;
+}
