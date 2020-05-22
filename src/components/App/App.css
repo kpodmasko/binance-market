@@ -1,3 +1,8 @@
+.app {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
 .app__header {
     margin: 0 0 10px;
 }
