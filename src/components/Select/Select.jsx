@@ -31,8 +31,10 @@ function Select({render, className = '', children}) {
             {root}
             <Icon icon={faCaretDown}/>
         </div>
-        {isOpen && <div className='select__drop-down'>
-            {children}
+        {isOpen && <div className='select__drop-down-wrapper'>
+            <div className='select__drop-down'>
+                {children}
+            </div>
         </div>
         }
     </div>

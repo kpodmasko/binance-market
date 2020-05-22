@@ -9,3 +9,12 @@
     max-width: 55px;
     user-select: none;
 }
+
+.select__drop-down-wrapper {
+    position: relative;
+}
+
+.select__drop-down {
+    top: 10px;
+    position: absolute;
+}
