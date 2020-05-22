@@ -5,6 +5,7 @@ import Header from '../Header';
 import Toggler from "../Toggler";
 import Select from "../Select";
 import Icon from "../Icon";
+import Search from "../Search";
 import {testIds} from "../../utils/constants";
 
 import './App.css';
@@ -37,6 +38,15 @@ function App() {
                 jsdopen
             </Select>
         </Toggler>
+        <div className='app__search-and-toggler-wrapper'>
+            <div className='app__layout--60'>
+                <Search/>
+            </div>
+            <Toggler className='app__layout--40'>
+                <label><input type='radio'/>Change</label>
+                <label><input type='radio'/>Volume</label>
+            </Toggler>
+        </div>
     </div>
 }
 
