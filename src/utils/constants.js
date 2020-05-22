@@ -4,6 +4,10 @@ const testIds = {
     select: {
         root: 'select',
         option: 'option'
+    },
+    icon: {
+        root: 'icon',
+        instance: 'icon__instance'
     }
 }
 
