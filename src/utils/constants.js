@@ -8,7 +8,8 @@ const testIds = {
     icon: {
         root: 'icon',
         instance: 'icon__instance'
-    }
+    },
+    toggler: 'toggler'
 }
 
 export {
