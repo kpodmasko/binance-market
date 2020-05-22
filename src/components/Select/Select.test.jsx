@@ -16,3 +16,10 @@ test('handles prop className', () => {
     const selectElement = getByTestId(testIds.select.root);
     expect(selectElement.classList.contains(testClassname)).toBe(true);
 });
+
+test('handles prop render', () => {
+    const testClassname = 'test-classname';
+    const renderMock = jest.fn(() => <div/>);
+    render(<Select className={testClassname} render={renderMock}/>);
+    expect(renderMock.mock.calls.length).toBe(1);
+});
