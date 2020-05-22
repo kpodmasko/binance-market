@@ -1,6 +1,6 @@
 .toggler {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .toggler__item {

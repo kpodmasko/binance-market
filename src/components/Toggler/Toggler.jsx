@@ -10,10 +10,8 @@ function Toggler({className = '', children}) {
     const classes = `toggler ${className}`;
 
     const handleItemClick = useCallback(index => {
-        if (index !== selectedIndex) {
-            setSelectedIndex(index);
-        }
-    }, [selectedIndex, setSelectedIndex])
+        setSelectedIndex(index);
+    }, [setSelectedIndex])
 
     return <div className={classes} data-testid={testIds.toggler}>
         {Children.map(children, (child, i) => <div
