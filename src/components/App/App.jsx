@@ -10,14 +10,18 @@ import {testIds} from "../../utils/constants";
 import './App.css';
 
 function App() {
-    const renderALTS = useCallback(({setIsOpen, isOpen}) => <div onClick={() => setIsOpen(!isOpen)}>
-        ALTS
-    </div>, []);
+    const renderALTS = useCallback(
+        ({setIsOpen, isOpen}) => <div onClick={/*TODO: think*/() => setIsOpen(!isOpen)}>
+            ALTS
+        </div>, []
+    );
 
-    const renderJSD = useCallback(({setIsOpen, isOpen}) => <div onClick={() => setIsOpen(!isOpen)}>
-        JSD
-        <Icon icon={faDollarSign}/>
-    </div>, []);
+    const renderJSD = useCallback(
+        ({setIsOpen, isOpen}) => <div onClick={/*TODO: think*/() => setIsOpen(!isOpen)}>
+                JSD
+            <Icon icon={faDollarSign}/>
+        </div>, []
+    );
 
     return <div data-testid={testIds.app} className='app'>
         <Header title='Market' className='app__header'/>
