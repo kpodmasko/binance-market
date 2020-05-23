@@ -5,10 +5,10 @@ import {testIds} from "../../utils/constants";
 
 import './Icon.css';
 
-function Icon({icon = 'coffee', className = ''}) {
+function Icon({icon = 'coffee', className = '', onClick}) {
     const classes = `icon ${className}`;
 
-    return <span className={classes} data-testid={testIds.icon.root}>
+    return <span className={classes} data-testid={testIds.icon.root} onClick={onClick}>
         <FontAwesomeIcon icon={icon} data-testid={testIds.icon.instance} />
     </span>
 }

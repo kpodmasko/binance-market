@@ -11,5 +11,6 @@ export const testIds = {
     },
     switcher: 'switcher',
     search: 'search',
-    radio: 'radio'
+    radio: 'radio',
+    table: 'table'
 }

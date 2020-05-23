@@ -1,5 +1,5 @@
 import React, {
-    useCallback, useEffect, useState, useRef
+    useCallback, useEffect, useState, useRef, useMemo
 } from 'react';
 import {
     faStar, faDollarSign, faPause, faPlay, faCloudDownloadAlt, faTimes
@@ -11,6 +11,7 @@ import Select from "../Select";
 import Icon from "../Icon";
 import Search from "../Search";
 import Radio from "../Radio";
+import Table from "../Table";
 import {testIds} from "../../utils/constants";
 import {
     api, normalizeData, updateData
@@ -30,6 +31,7 @@ function App() {
     const [data, setData] = useState(null);
     const [isUpdating, setIsUpdating] = useState(true);
     const [isAlive, setIsAlive] = useState(true);
+    const [stars, setStars] = useState([]);
 
     const socketRef = useRef(null);
 
@@ -58,6 +60,38 @@ function App() {
     const handleAliveTogglerClick = useCallback(() => {
         setIsAlive(!isAlive);
     }, [setIsAlive, isAlive]);
+
+    const handleStar = useCallback(pair => {
+        const newStars = stars.includes(pair)
+            ? stars.filter(star => star !== pair)
+            : [...stars, pair]
+
+        setStars(newStars);
+        localStorage.setItem('stars', newStars.join(','));
+    }, [setStars, stars]);
+
+    const preparedForRenderData = useMemo(() => {
+        if (!data) {
+            return [];
+        }
+
+        return Object.entries(data).map(([pair, {
+            lastPrice, change, volume, base, quote
+        }]) => ({
+            pair,
+            name: {
+                root: `${base}/${quote}`,
+                canMargin: Math.random() >= 0.5, // random as can not understand how to compute it
+                onStar: handleStar.bind(null, pair),
+                isStar: stars.includes(pair)
+            },
+            rate: {
+                root: change,
+                active: 'change'
+            },
+            lastPrice
+        }));
+    }, [data, handleStar, stars]);
 
     // get full products list (only once)
     useEffect(() => {
@@ -121,6 +155,15 @@ function App() {
         };
     }, [setData, data, isUpdating]);
 
+    // start recovery
+    useEffect(() => {
+        const savedStars = localStorage.getItem('stars');
+
+        if (savedStars) {
+            setStars(savedStars.split(','));
+        }
+    }, []);
+
     return <div data-testid={testIds.app} className='app'>
         <div className='app__header-wrapper'>
             <div className='app__layout--60'>
@@ -166,11 +209,7 @@ function App() {
                 className='app__rate app__layout--40'
             />
         </div>
-        {data && Object.entries(data).map(([pair, {lastPrice}]) => {
-            return <div key={pair}>
-                {pair}:{lastPrice}
-            </div>
-        })}
+        <Table width={500} data={preparedForRenderData}/>
     </div>
 }
 

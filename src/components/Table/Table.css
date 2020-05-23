@@ -1,0 +1,44 @@
+.table__cell {
+    text-align: center;
+    cursor: default;
+}
+
+.table__cell--rate {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.table__cell--positive-rate {
+    color: green;
+}
+
+.table__cell--negative-rate {
+    color: red;
+}
+
+.table__cell--name {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.table__cell--name .table__star {
+    margin-right: 5px;
+}
+
+.table__cell--name .table__margin {
+    margin-left: 5px;
+}
+
+.table__star {
+    cursor: pointer;
+}
+
+.table__star--selected {
+    color: orange;
+}
+
+.table__margin {
+    border: 1px solid orange;
+    color: orange;
+}

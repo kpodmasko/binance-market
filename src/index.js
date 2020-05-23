@@ -5,6 +5,7 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
+import 'react-virtualized/styles.css';
 
 ReactDOM.render(
   <React.StrictMode>
