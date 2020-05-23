@@ -13,6 +13,20 @@
     padding: 0 5px;
 }
 
+.app__header-wrapper {
+    display: flex;
+}
+
+.app__updates-controller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app__updates-toggler {
+    cursor: pointer;
+}
+
 /* LAYOUT */
 
 .app__layout--60 {
