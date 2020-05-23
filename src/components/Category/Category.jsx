@@ -22,8 +22,9 @@ function Category({className = '', activeCategory, data, onClick}) {
         return <Select className='category' render={renderSelect(data[0].label)}>
             <div>
                 {data.map(
-                    dataItem =>
+                    (dataItem, index) =>
                         <Category
+                            key={dataItem.value || index}
                             className={className}
                             data={dataItem}
                             onClick={onClick}
