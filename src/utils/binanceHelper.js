@@ -24,13 +24,13 @@ export function getOpenPrice({o}) {
 }
 
 export function getVolume({qv}) {
-    return qv ? qv.toFixed(2) : NaN
+    return qv || NaN
 }
 
 export function getChange(item) {
     const change = getLastPrice(item) - getOpenPrice(item);
 
-    return isNaN(change) ? NaN : change.toFixed(10);
+    return isNaN(change) ? NaN : change.toFixed(10).replace(/0{1,10}$/, '')
 }
 
 export function getPair(item) {
