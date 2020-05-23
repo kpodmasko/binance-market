@@ -1,3 +1,4 @@
 import TableCell from "./TableCell";
+import TableHeader from "./TableHeader";
 
-export {TableCell};
+export {TableCell, TableHeader};

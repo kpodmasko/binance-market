@@ -12,12 +12,34 @@ import Icon from "../Icon";
 import Search from "../Search";
 import Radio from "../Radio";
 import Table from "../Table";
-import {testIds} from "../../utils/constants";
+import {sort, testIds} from "../../utils/constants";
 import {
     api, normalizeData, updateData
 } from "../../utils/binanceHelper";
 
 import './App.css';
+
+function generateSorter({sortBy, sortDirection}) {
+    function sortDataItem(a, b) {
+        if (a > b) {
+            return sortDirection === sort.ASC ? 1 : -1;
+        }
+        if (a < b) {
+            return sortDirection === sort.ASC ? -1 : 1;
+        }
+        return 0;
+    }
+
+    return function (a, b) {
+        const dataForSortType = typeof a[sortBy];
+
+        if (dataForSortType !== 'object') {
+            return sortDataItem(a[sortBy], b[sortBy]);
+        } else {
+            return sortDataItem(a[sortBy].root, b[sortBy].root);
+        }
+    }
+}
 
 const radioData = [{
     label: 'Change',
@@ -28,6 +50,8 @@ const radioData = [{
 }]
 
 function App() {
+    const [sortDirection, setSortDirection] = useState('ASC');
+    const [sortBy, setSortBy] = useState('name');
     const [data, setData] = useState(null);
     const [isUpdating, setIsUpdating] = useState(true);
     const [isAlive, setIsAlive] = useState(true);
@@ -70,28 +94,42 @@ function App() {
         localStorage.setItem('stars', newStars.join(','));
     }, [setStars, stars]);
 
+    const handleHeaderClick = useCallback(({dataKey}) => {
+        if (dataKey === sortBy) {
+            const newSortDirection = sortDirection === 'ASC' ? 'DESC' : 'ASC';
+            setSortDirection(newSortDirection)
+            localStorage.setItem('sortDirection', newSortDirection);
+            return;
+        }
+
+        setSortBy(dataKey);
+        localStorage.setItem('sortBy', dataKey);
+    }, [sortDirection, sortBy]);
+
     const preparedForRenderData = useMemo(() => {
         if (!data) {
             return [];
         }
 
-        return Object.entries(data).map(([pair, {
-            lastPrice, change, volume, base, quote
-        }]) => ({
-            pair,
-            name: {
-                root: `${base}/${quote}`,
-                canMargin: Math.random() >= 0.5, // random as can not understand how to compute it
-                onStar: handleStar.bind(null, pair),
-                isStar: stars.includes(pair)
-            },
-            rate: {
-                root: change,
-                active: 'change'
-            },
-            lastPrice
-        }));
-    }, [data, handleStar, stars]);
+        return Object.entries(data)
+            .map(([pair, {
+                lastPrice, change, volume, base, quote
+            }]) => ({
+                pair,
+                name: {
+                    root: `${base}/${quote}`,
+                    canMargin: Math.random() >= 0.5, // random as can not understand how to compute it
+                    onStar: handleStar.bind(null, pair),
+                    isStar: stars.includes(pair)
+                },
+                rate: {
+                    root: change,
+                    active: 'change'
+                },
+                lastPrice
+            }))
+            .sort(generateSorter({sortDirection, sortBy}));
+    }, [data, handleStar, stars, sortBy, sortDirection]);
 
     // get full products list (only once)
     useEffect(() => {
@@ -155,12 +193,22 @@ function App() {
         };
     }, [setData, data, isUpdating]);
 
-    // start recovery
+    // local storage recovery
     useEffect(() => {
         const savedStars = localStorage.getItem('stars');
+        const savedSortBy = localStorage.getItem('sortBy');
+        const savedSortDirection = localStorage.getItem('sortDirection');
 
         if (savedStars) {
             setStars(savedStars.split(','));
+        }
+
+        if (savedSortBy) {
+            setSortBy(savedSortBy);
+        }
+
+        if (savedSortDirection) {
+            setSortDirection(savedSortDirection);
         }
     }, []);
 
@@ -209,7 +257,13 @@ function App() {
                 className='app__rate app__layout--40'
             />
         </div>
-        <Table width={500} data={preparedForRenderData}/>
+        <Table
+            width={500}
+            data={preparedForRenderData}
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            onHeaderClick={handleHeaderClick}
+        />
     </div>
 }
 

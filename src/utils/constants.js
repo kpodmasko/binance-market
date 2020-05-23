@@ -14,3 +14,8 @@ export const testIds = {
     radio: 'radio',
     table: 'table'
 }
+
+export const sort = {
+    ASC: 'ASC',
+    DESC: 'DESC'
+}
