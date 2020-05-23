@@ -1,4 +1,4 @@
-const testIds = {
+export const testIds = {
     app: 'app',
     header: 'header',
     select: {
@@ -9,11 +9,7 @@ const testIds = {
         root: 'icon',
         instance: 'icon__instance'
     },
-    toggler: 'toggler',
+    switcher: 'switcher',
     search: 'search',
     radio: 'radio'
-}
-
-export {
-    testIds
 }

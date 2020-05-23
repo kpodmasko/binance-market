@@ -1,13 +1,13 @@
-.toggler {
+.switcher {
     display: flex;
     justify-content: space-between;
 }
 
-.toggler__item {
+.switcher__item {
     padding: 5px;
     cursor: pointer;
 }
 
-.toggler__item--selected {
+.switcher__item--selected {
     background: lightgray;
 }

@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import Header from '../Header';
-import Toggler from "../Toggler";
+import Switcher from "../Switcher";
 import Select from "../Select";
 import Icon from "../Icon";
 import Search from "../Search";
@@ -144,7 +144,7 @@ function App() {
             </div>
         </div>
 
-        <Toggler className='app__currency'>
+        <Switcher className='app__currency'>
             <Icon icon={faStar}/>
             <span>Margin</span>
             <span>BNB</span>
@@ -155,7 +155,7 @@ function App() {
             <Select render={renderJSD}>
                 jsdopen
             </Select>
-        </Toggler>
+        </Switcher>
         <div className='app__search-and-rate-wrapper'>
             <div className='app__layout--60'>
                 <Search/>

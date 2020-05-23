@@ -2,20 +2,20 @@ import React, {Children, useCallback, useState} from 'react';
 
 import {testIds} from "../../utils/constants";
 
-import './Toggler.css';
+import './Switcher.css';
 
-function Toggler({className = '', children}) {
+function Switcher({className = '', children}) {
     const [selectedIndex, setSelectedIndex] = useState(null);
 
-    const classes = `toggler ${className}`;
+    const classes = `switcher ${className}`;
 
     const handleItemClick = useCallback(index => {
         setSelectedIndex(index);
     }, [setSelectedIndex])
 
-    return <div className={classes} data-testid={testIds.toggler}>
+    return <div className={classes} data-testid={testIds.switcher}>
         {Children.map(children, (child, i) => <div
-            className={`toggler__item ${i === selectedIndex ? 'toggler__item--selected' : ''}`}
+            className={`switcher__item ${i === selectedIndex ? 'switcher__item--selected' : ''}`}
             onClick={handleItemClick.bind(null, i)}
         >
             {child}
@@ -24,4 +24,4 @@ function Toggler({className = '', children}) {
     </div>
 }
 
-export default Toggler;
+export default Switcher;
