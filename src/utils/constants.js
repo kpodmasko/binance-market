@@ -9,7 +9,7 @@ export const testIds = {
         root: 'icon',
         instance: 'icon__instance'
     },
-    switcher: 'switcher',
+    category: 'category',
     search: 'search',
     radio: 'radio',
     table: 'table'

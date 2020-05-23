@@ -27,6 +27,12 @@
     cursor: pointer;
 }
 
+.app__currency {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 /* LAYOUT */
 
 .app__layout--60 {

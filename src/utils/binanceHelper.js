@@ -11,6 +11,10 @@ export function getBase({b}) {
     return b || '';
 }
 
+export function getParentMarket({pm}) {
+    return pm || '';
+}
+
 export function getLastPrice({c}) {
     return c || NaN;
 }
@@ -39,7 +43,8 @@ export function normalizeItem(item) {
         quote: getQuote(item),
         lastPrice: getLastPrice(item),
         volume: getVolume(item),
-        change: getChange(item)
+        change: getChange(item),
+        parentMarket: getParentMarket(item)
     };
 }
 

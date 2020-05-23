@@ -2,12 +2,11 @@ import React, {
     useCallback, useEffect, useState, useRef, useMemo
 } from 'react';
 import {
-    faStar, faDollarSign, faPause, faPlay, faCloudDownloadAlt, faTimes
+    faStar, faPause, faPlay, faCloudDownloadAlt, faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 import Header from '../Header';
-import Switcher from "../Switcher";
-import Select from "../Select";
+import Category from "../Category";
 import Icon from "../Icon";
 import Search from "../Search";
 import Radio from "../Radio";
@@ -49,6 +48,31 @@ const radioData = [{
     value: 'volume'
 }]
 
+const currencyData = [
+    {label: <Icon icon={faStar}/>, value: 'stars'},
+    {label: 'Margin', value: 'margin'},
+    {label: 'BNB', value: 'BNB'},
+    {label: 'BTC', value: 'BTC'},
+    [
+        {label: 'ALTS', value: 'ALTS'},
+        {label: 'XRP', value: 'XRP'},
+        {label: 'ETH', value: 'ETH'},
+        {label: 'TRX', value: 'TRX'}
+    ],
+    [
+        {label: 'USDⓈ', value: 'USDⓈ'},
+        {label: 'USDT', value: 'USDT'},
+        {label: 'BUSD', value: 'BUSD'},
+        {label: 'TUSD', value: 'TUSD'},
+        {label: 'PAX', value: 'PAX'}
+    ]
+];
+
+// TODO: replace categories to constants
+// TODO: styling
+// TODO: add custom hooks for localStorage, sockets
+// TODO: tests for components
+
 function App() {
     const [sortDirection, setSortDirection] = useState('ASC');
     const [sortBy, setSortBy] = useState('name');
@@ -56,21 +80,11 @@ function App() {
     const [isUpdating, setIsUpdating] = useState(true);
     const [isAlive, setIsAlive] = useState(true);
     const [stars, setStars] = useState([]);
+    const [search, setSearch] = useState('');
+    const [category, setCategory] = useState('');
+    const [rateType, setRateType] = useState(radioData[0].value);
 
     const socketRef = useRef(null);
-
-    const renderALTS = useCallback(
-        ({setIsOpen, isOpen}) => <div onClick={/*TODO: think*/() => setIsOpen(!isOpen)}>
-            ALTS
-        </div>, []
-    );
-
-    const renderJSD = useCallback(
-        ({setIsOpen, isOpen}) => <div onClick={/*TODO: think*/() => setIsOpen(!isOpen)}>
-            JSD
-            <Icon icon={faDollarSign}/>
-        </div>, []
-    );
 
     const handleUpdatingTogglerClick = useCallback(() => {
         if (isAlive) {
@@ -106,6 +120,40 @@ function App() {
         localStorage.setItem('sortBy', dataKey);
     }, [sortDirection, sortBy]);
 
+    const handleSearchChange = useCallback(newSearch => {
+        setSearch(newSearch);
+        localStorage.setItem('search', newSearch);
+    }, []);
+
+    const handleRateTypeChange = useCallback(newRateType => {
+        setRateType(newRateType);
+        localStorage.setItem('rateType', newRateType);
+    }, []);
+
+    const handleCategoryItemClick = useCallback((category = '') => {
+        setCategory(category);
+        localStorage.setItem('category', category);
+    }, [])
+
+    const checkCategory = useCallback(item => {
+        if (category === 'stars') {
+            return item.name.isStar
+        }
+
+        if (category === 'margin') {
+            return item.name.canMargin
+        }
+
+        if (['BTC', 'BNB', 'ALTS', 'USDⓈ'].includes(category)) {
+            return item.parentMarket === category;
+        }
+
+        if (['USDT', 'BUSD', 'TUSD', 'USDC', 'USDT', 'PAX', 'XRP', 'ETH', 'TRX'].includes(category)) {
+            return item.quote === category;
+        }
+        return true;
+    }, [category]);
+
     const preparedForRenderData = useMemo(() => {
         if (!data) {
             return [];
@@ -113,9 +161,12 @@ function App() {
 
         return Object.entries(data)
             .map(([pair, {
-                lastPrice, change, volume, base, quote
+                lastPrice, change, volume, base, quote, parentMarket
             }]) => ({
+                quote,
+                base,
                 pair,
+                parentMarket,
                 name: {
                     root: `${base}/${quote}`,
                     canMargin: Math.random() >= 0.5, // random as can not understand how to compute it
@@ -123,13 +174,25 @@ function App() {
                     isStar: stars.includes(pair)
                 },
                 rate: {
-                    root: change,
-                    active: 'change'
+                    root: rateType === 'volume' ? volume : change,
+                    active: rateType
                 },
                 lastPrice
             }))
+            .filter(item => item.name.root.includes(search) && checkCategory(item))
             .sort(generateSorter({sortDirection, sortBy}));
-    }, [data, handleStar, stars, sortBy, sortDirection]);
+    }, [data, handleStar, stars, sortBy, sortDirection, search, checkCategory, rateType]);
+
+    const cells = useMemo(() => [{
+        label: 'Name',
+        dataKey: 'name'
+    }, {
+        label: 'Last Price',
+        dataKey: 'lastPrice'
+    }, {
+        label: rateType === 'volume' ? 'Volume' : 'Change',
+        dataKey: 'rate'
+    }], [rateType]);
 
     // get full products list (only once)
     useEffect(() => {
@@ -198,6 +261,9 @@ function App() {
         const savedStars = localStorage.getItem('stars');
         const savedSortBy = localStorage.getItem('sortBy');
         const savedSortDirection = localStorage.getItem('sortDirection');
+        const savedCategory = localStorage.getItem('category');
+        const savedSearch = localStorage.getItem('search');
+        const savedRateType = localStorage.getItem('rateType');
 
         if (savedStars) {
             setStars(savedStars.split(','));
@@ -209,6 +275,18 @@ function App() {
 
         if (savedSortDirection) {
             setSortDirection(savedSortDirection);
+        }
+
+        if (savedCategory) {
+            setCategory(savedCategory);
+        }
+
+        if (savedSearch) {
+            setSearch(savedSearch);
+        }
+
+        if (savedRateType) {
+            setRateType(savedRateType);
         }
     }, []);
 
@@ -234,27 +312,28 @@ function App() {
                 </button>
             </div>
         </div>
-
-        <Switcher className='app__currency'>
-            <Icon icon={faStar}/>
-            <span>Margin</span>
-            <span>BNB</span>
-            <span>BTC</span>
-            <Select render={renderALTS}>
-                altsopen
-            </Select>
-            <Select render={renderJSD}>
-                jsdopen
-            </Select>
-        </Switcher>
+        <div className='app__currency'>
+            {currencyData.map(
+                    (dataItem, index) =>
+                        <Category
+                            key={dataItem.value || index}
+                            data={dataItem}
+                            activeCategory={category}
+                            onClick={handleCategoryItemClick}
+                        />
+                 )
+            }
+        </div>
         <div className='app__search-and-rate-wrapper'>
             <div className='app__layout--60'>
-                <Search/>
+                <Search defaultValue={search} onChange={handleSearchChange}/>
             </div>
             <Radio
                 data={radioData}
                 name='rate'
                 className='app__rate app__layout--40'
+                onChange={handleRateTypeChange}
+                defaultValue={rateType}
             />
         </div>
         <Table
@@ -263,6 +342,7 @@ function App() {
             sortBy={sortBy}
             sortDirection={sortDirection}
             onHeaderClick={handleHeaderClick}
+            cells={cells}
         />
     </div>
 }

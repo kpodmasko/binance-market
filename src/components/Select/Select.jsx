@@ -6,7 +6,7 @@ import {testIds} from "../../utils/constants";
 import './Select.css';
 import Icon from "../Icon";
 
-function Select({render, className = '', children}) {
+function Select({render, className = '', children, defaultIsOpen}) {
     const [isOpen, setIsOpen] = useState(false);
 
     const classes = `select ${className}`;

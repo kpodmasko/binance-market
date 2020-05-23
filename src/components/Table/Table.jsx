@@ -6,10 +6,14 @@ import {testIds} from "../../utils/constants";
 
 import './Table.css';
 
-function Table({className = '', data = [], width = 300, height = 500, headerHeight = 50, rowHeight = 40, sortBy = 'name', sortDirection = 'ASC', onHeaderClick}) {
+function Table({className = '', data = [], width = 300, height = 500, headerHeight = 50, rowHeight = 40, sortBy = 'name', sortDirection = 'ASC', onHeaderClick, cells}) {
     const classes = `table ${className}`;
 
     const rowGetter = useCallback(({index}) => data[index], [data]);
+
+    if (!cells) {
+        return null;
+    }
 
     return <div className={classes} data-testid={testIds.table}>
         <VirtualizedTable
@@ -23,27 +27,15 @@ function Table({className = '', data = [], width = 300, height = 500, headerHeig
             sortDirection={sortDirection}
             onHeaderClick={onHeaderClick}
         >
-            <VirtualizedColumn
-                label="Name"
-                cellRenderer={TableCell}
-                headerRenderer={TableHeader}
-                dataKey="name"
-                width={parseInt(width / 3, 10)}
-            />
-            <VirtualizedColumn
-                label="Latest Price"
-                cellRenderer={TableCell}
-                headerRenderer={TableHeader}
-                dataKey="lastPrice"
-                width={parseInt(width / 3, 10)}
-            />
-            <VirtualizedColumn
-                label="Change"
-                cellRenderer={TableCell}
-                headerRenderer={TableHeader}
-                dataKey="rate"
-                width={parseInt(width / 3, 10)}
-            />
+            {
+                cells.map(cell => <VirtualizedColumn
+                    {...cell}
+                    key={cell.dataKey}
+                    cellRenderer={TableCell}
+                    headerRenderer={TableHeader}
+                    width={parseInt(width / cells.length, 10)}
+                />)
+            }
         </VirtualizedTable>
     </div>
 }

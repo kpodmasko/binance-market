@@ -19,7 +19,7 @@ function renderName({root, canMargin, onStar, isStar} ) {
 
 function renderRate({root, active}) {
     if (active === 'volume') {
-        return root;
+        return <div className='table__cell table__cell--rate'>{root}</div>;
     }
 
     return root > 0

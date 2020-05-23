@@ -4,14 +4,20 @@ import {testIds} from "../../utils/constants";
 
 import './Radio.css';
 
-function Radio({data = [], className = '', name = ''}) {
+function Radio({data = [], className = '', name = '', defaultValue, onChange}) {
     const [value, setValue] = useState('');
 
     const classes = `radio ${className}`;
 
     const handleChange = useCallback(event => {
-        setValue(event.currentTarget.value);
-    }, [setValue]);
+        const newValue = event.currentTarget.value;
+
+        setValue(newValue);
+
+        if (onChange) {
+            onChange(newValue);
+        }
+    }, [onChange, setValue]);
 
     return <div className={classes} data-testid={testIds.radio}>
         {
@@ -21,7 +27,7 @@ function Radio({data = [], className = '', name = ''}) {
                         type='radio'
                         name={name}
                         value={dataItem.value}
-                        checked={dataItem.value === value}
+                        checked={dataItem.value === (defaultValue || value)}
                         onChange={handleChange}
                         className='radio__instance'
                     />

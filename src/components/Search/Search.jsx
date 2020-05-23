@@ -6,18 +6,24 @@ import {testIds} from "../../utils/constants";
 import './Search.css';
 import Icon from "../Icon";
 
-function Search({className = ''}) {
+function Search({className = '', defaultValue = '', onChange}) {
     const [value, setValue] = useState('');
 
     const classes = `search ${className}`;
 
     const handleChange = useCallback(event => {
-        setValue(event.target.value);
-    }, []);
+        const newValue = event.target.value;
+
+        setValue(newValue);
+
+        if (onChange) {
+            onChange(newValue);
+        }
+    }, [onChange]);
 
     return <div className={classes} data-testid={testIds.search}>
         <Icon icon={faSearch} className='search__icon'/>
-        <input placeholder='Search' value={value} onChange={handleChange}/>
+        <input placeholder='Search' value={defaultValue || value} onChange={handleChange}/>
     </div>
 }
 
