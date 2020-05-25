@@ -12,7 +12,10 @@ export const testIds = {
     category: 'category',
     search: 'search',
     radio: 'radio',
-    table: 'table'
+    table: {
+        root: 'table',
+        cell: 'table__cell'
+    }
 }
 
 export const sort = {

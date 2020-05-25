@@ -11,13 +11,13 @@ const testCells = [{
 
 test('renders table', () => {
     const {getByTestId} = render(<Table cells={testCells}/>);
-    const tableElement = getByTestId(testIds.table);
+    const tableElement = getByTestId(testIds.table.root);
     expect(tableElement).toBeInTheDocument();
 });
 
 test('handles prop className', () => {
     const testClassname = 'test-classname';
     const {getByTestId} = render(<Table className={testClassname} cells={testCells}/>);
-    const tableElement = getByTestId(testIds.table);
+    const tableElement = getByTestId(testIds.table.root);
     expect(tableElement.classList.contains(testClassname)).toBe(true);
 });

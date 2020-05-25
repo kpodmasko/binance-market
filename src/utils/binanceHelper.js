@@ -1,5 +1,5 @@
 export const api = {
-    getProducts: '/exchange-api/v1/public/asset-service/product/get-products',
+    getProducts: 'exchange-api/v1/public/asset-service/product/get-products',
     socket: 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
 }
 

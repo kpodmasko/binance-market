@@ -1,10 +1,11 @@
 import React from 'react';
-
-import Icon from "../../Icon";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 
+import Icon from "../../Icon";
+import {testIds} from "../../../utils/constants";
+
 function renderName({root, canMargin, onStar, isStar} ) {
-    return <div className='table__cell table__cell--name'>
+    return <div className='table__cell table__cell--name' data-testid={testIds.table.cell}>
         <span className={`table__star ${isStar ? 'table__star--selected' : ''}`}>
             <Icon icon={faStar} onClick={onStar}/>
         </span>
@@ -19,12 +20,16 @@ function renderName({root, canMargin, onStar, isStar} ) {
 
 function renderRate({root, active}) {
     if (active === 'volume') {
-        return <div className='table__cell table__cell--rate'>{root}</div>;
+        return <div className='table__cell table__cell--rate' data-testid={testIds.table.cell}>{root}</div>;
     }
 
     return root > 0
-        ? <div className='table__cell table__cell--rate table__cell--positive-rate'>+{root}%</div>
-        : <div className='table__cell table__cell--rate table__cell--negative-rate'>{root}%</div>
+        ? <div className='table__cell table__cell--rate table__cell--positive-rate' data-testid={testIds.table.cell}>
+            +{root}%
+        </div>
+        : <div className='table__cell table__cell--rate table__cell--negative-rate' data-testid={testIds.table.cell}>
+            {root}%
+        </div>
 }
 
 function TableCell({cellData, dataKey}) {
@@ -40,7 +45,7 @@ function TableCell({cellData, dataKey}) {
         return renderName(cellData);
     }
 
-    return <div className='table__cell'>{cellData}</div>;
+    return <div className='table__cell' data-testid={testIds.table.cell}>{cellData}</div>;
 }
 
 export default TableCell;

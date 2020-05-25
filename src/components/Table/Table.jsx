@@ -15,7 +15,7 @@ function Table({className = '', data = [], width = 300, height = 500, headerHeig
         return null;
     }
 
-    return <div className={classes} data-testid={testIds.table}>
+    return <div className={classes} data-testid={testIds.table.root}>
         <VirtualizedTable
             width={width}
             height={height}

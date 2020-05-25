@@ -197,10 +197,16 @@ function App() {
     // get full products list (only once)
     useEffect(() => {
         (async () => {
-            const response = await fetch(api.getProducts)
-            const {data: initData} = await response.json();
+            try {
+                const response = await fetch(api.getProducts)
+                const {data: initData} = await response.json();
+                console.log(initData, response);
 
-            setData(normalizeData(initData));
+                setData(normalizeData(initData));
+            } catch (e) {
+                console.log(e);
+            }
+
         })()
     }, [])
 
