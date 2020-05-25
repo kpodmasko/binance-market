@@ -30,4 +30,5 @@ function TableHeader({sortDirection, sortBy, label, dataKey}) {
     </div>
 }
 
+// no memo as unknown about data probided by lib
 export default TableHeader

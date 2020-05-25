@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, memo} from 'react';
 
 import {testIds} from "../../utils/constants";
 
@@ -38,4 +38,4 @@ function Radio({data = [], className = '', name = '', defaultValue, onChange}) {
     </div>
 }
 
-export default Radio;
+export default memo(Radio);

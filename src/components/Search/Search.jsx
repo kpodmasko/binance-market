@@ -1,10 +1,10 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, memo} from 'react';
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
+import Icon from "../Icon";
 import {testIds} from "../../utils/constants";
 
 import './Search.css';
-import Icon from "../Icon";
 
 function Search({className = '', defaultValue = '', onChange}) {
     const [value, setValue] = useState('');
@@ -27,4 +27,4 @@ function Search({className = '', defaultValue = '', onChange}) {
     </div>
 }
 
-export default Search;
+export default memo(Search);

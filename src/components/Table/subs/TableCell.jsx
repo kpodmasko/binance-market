@@ -48,4 +48,5 @@ function TableCell({cellData, dataKey}) {
     return <div className='table__cell' data-testid={testIds.table.cell}>{cellData}</div>;
 }
 
+// no memo as unknown about data probided by lib
 export default TableCell;

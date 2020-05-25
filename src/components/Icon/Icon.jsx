@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import {testIds} from "../../utils/constants";
@@ -13,4 +13,4 @@ function Icon({icon = 'coffee', className = '', onClick}) {
     </span>
 }
 
-export default Icon;
+export default memo(Icon);

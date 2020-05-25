@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import {testIds} from "../../utils/constants";
 
@@ -12,4 +12,4 @@ function Header({title = '', className = ''}) {
     </header>
 }
 
-export default Header;
+export default memo(Header);

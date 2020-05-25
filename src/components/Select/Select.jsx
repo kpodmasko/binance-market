@@ -1,10 +1,10 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, memo} from 'react';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons'
 
+import Icon from "../Icon";
 import {testIds} from "../../utils/constants";
 
 import './Select.css';
-import Icon from "../Icon";
 
 function Select({render, className = '', children, defaultIsOpen}) {
     const [isOpen, setIsOpen] = useState(false);
@@ -40,4 +40,4 @@ function Select({render, className = '', children, defaultIsOpen}) {
     </div>
 }
 
-export default Select;
+export default memo(Select);

@@ -1,9 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, memo} from 'react';
 
+import Select from "../Select";
 import {testIds} from "../../utils/constants";
 
 import './Category.css';
-import Select from "../Select";
 
 function Category({className = '', activeCategory, data, onClick}) {
     const renderSelect = useCallback(
@@ -42,4 +42,4 @@ function Category({className = '', activeCategory, data, onClick}) {
     </div>
 }
 
-export default Category;
+export default memo(Category);

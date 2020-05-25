@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, memo} from 'react';
 import {Column as VirtualizedColumn, Table as VirtualizedTable} from 'react-virtualized';
 
 import {TableCell, TableHeader} from './subs';
@@ -40,4 +40,4 @@ function Table({className = '', data = [], width = 300, height = 500, headerHeig
     </div>
 }
 
-export default Table;
+export default memo(Table);
