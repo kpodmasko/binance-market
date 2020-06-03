@@ -1,3 +1,5 @@
+import {convertExponent} from "./helpers";
+
 export const api = {
     getProducts: 'exchange-api/v1/public/asset-service/product/get-products',
     socket: 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
@@ -16,11 +18,15 @@ export function getParentMarket({pm}) {
 }
 
 export function getLastPrice({c}) {
-    return c || NaN;
+    const parsedC = parseFloat(c);
+
+    return isNaN(parsedC) ? NaN : convertExponent(parsedC)
 }
 
 export function getOpenPrice({o}) {
-    return o || NaN;
+    const parsedO = parseFloat(o);
+
+    return isNaN(parsedO) ? NaN : convertExponent(parsedO)
 }
 
 export function getVolume({qv}) {
@@ -28,9 +34,9 @@ export function getVolume({qv}) {
 }
 
 export function getChange(item) {
-    const change = getLastPrice(item) - getOpenPrice(item);
+    const diff = getLastPrice(item) - getOpenPrice(item);
 
-    return isNaN(change) ? NaN : change.toFixed(10).replace(/0{1,10}$/, '')
+    return isNaN(diff) ? NaN : (diff / getOpenPrice(item) * 100).toFixed(2);
 }
 
 export function getPair(item) {

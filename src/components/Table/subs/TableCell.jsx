@@ -23,7 +23,7 @@ function renderRate({root, active}) {
         return <div className='table__cell table__cell--rate' data-testid={testIds.table.cell}>{root}</div>;
     }
 
-    return root > 0
+    return root >= 0
         ? <div className='table__cell table__cell--rate table__cell--positive-rate' data-testid={testIds.table.cell}>
             +{root}%
         </div>
