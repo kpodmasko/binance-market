@@ -161,7 +161,7 @@ function App() {
 
         return Object.entries(data)
             .map(([pair, {
-                lastPrice, change, volume, base, quote, parentMarket
+                lastPrice, change, volume, base, quote, parentMarket, canMargin
             }]) => ({
                 quote,
                 base,
@@ -169,7 +169,7 @@ function App() {
                 parentMarket,
                 name: {
                     root: `${base}/${quote}`,
-                    canMargin: Math.random() >= 0.5, // random as can not understand how to compute it
+                    canMargin,
                     onStar: handleStar.bind(null, pair),
                     isStar: stars.includes(pair)
                 },
@@ -179,7 +179,7 @@ function App() {
                 },
                 lastPrice
             }))
-            .filter(item => item.name.root.includes(search) && checkCategory(item))
+            .filter(item => item.name.root.toLowerCase().includes(search.toLowerCase()) && checkCategory(item))
             .sort(generateSorter({sortDirection, sortBy}));
     }, [data, handleStar, stars, sortBy, sortDirection, search, checkCategory, rateType]);
 

@@ -37,6 +37,10 @@ export function getPair(item) {
     return item.s || `${getBase(item)}${getQuote(item)}`;
 }
 
+export function getCanMargin() {
+    return Math.random() >= 0.5 // random as can not understand how to compute it
+}
+
 export function normalizeItem(item) {
     return {
         base: getBase(item),
@@ -44,7 +48,8 @@ export function normalizeItem(item) {
         lastPrice: getLastPrice(item),
         volume: getVolume(item),
         change: getChange(item),
-        parentMarket: getParentMarket(item)
+        parentMarket: getParentMarket(item),
+        canMargin: getCanMargin()
     };
 }
 
@@ -68,13 +73,14 @@ export function updateData(outdated, updates) {
     const updated = {...outdated};
 
     updates.forEach(updateItem => {
-        const {lastPrice, change} = normalizeItem(updateItem);
+        const {lastPrice, change, canMargin} = normalizeItem(updateItem);
         const pair = getPair(updateItem);
 
         updated[pair] = {
             ...outdated[pair],
             lastPrice,
-            change
+            change,
+            canMargin
         }
     })
 
