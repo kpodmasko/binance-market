@@ -200,7 +200,6 @@ function App() {
             try {
                 const response = await fetch(api.getProducts)
                 const {data: initData} = await response.json();
-                console.log(initData, response);
 
                 setData(normalizeData(initData));
             } catch (e) {
